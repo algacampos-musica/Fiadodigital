@@ -9,7 +9,7 @@ import { Debtor, Product, Transaction, TransactionType, TransactionItem, DebtorS
 import { generateReminderMessage, analyzeFinancialStatus } from './services/geminiService';
 import { Modal } from './components/Modal';
 
-const APP_VERSION = '1.3.1';
+const APP_VERSION = '1.3.2';
 
 // Mock Data Generators for Initial Load
 const initialProducts: Product[] = [

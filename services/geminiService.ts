@@ -1,8 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { Debtor, Transaction, TransactionType } from '../types';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 const MODEL_NAME = 'gemini-2.5-flash';
 
 export const generateReminderMessage = async (
@@ -11,6 +9,9 @@ export const generateReminderMessage = async (
   tone: 'polite' | 'firm' | 'funny'
 ): Promise<string> => {
   try {
+    // Inicializa a IA apenas quando a função é chamada
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
     const prompt = `
       Você é um assistente financeiro de uma mercearia/loja local.
       Gere uma mensagem curta para WhatsApp cobrando o cliente.
@@ -31,7 +32,7 @@ export const generateReminderMessage = async (
     return response.text || "Não foi possível gerar a mensagem.";
   } catch (error) {
     console.error("Erro ao gerar mensagem:", error);
-    return "Erro ao conectar com a IA para gerar mensagem.";
+    return "Erro ao conectar com a IA. Verifique a chave de API.";
   }
 };
 
@@ -40,6 +41,9 @@ export const analyzeFinancialStatus = async (
   transactions: Transaction[]
 ): Promise<string> => {
   try {
+    // Inicializa a IA apenas quando a função é chamada
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
     const debtHistory = transactions
       .filter(t => t.type === TransactionType.DEBT)
       .slice(-5)
